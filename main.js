@@ -1,3 +1,5 @@
+
+
 const firstPage = document.querySelector('.first-page');
 const firstPageButton = firstPage.querySelector('.first-page__button');
 const secondPage = document.querySelector('.second-page');
@@ -34,58 +36,82 @@ let userChatId = '';
 const photoPath = './images/logo.png';
 const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
+let isAllLayersErased = false;
 
-
-function move2(e, percent) {
-  if (percent.toFixed(1) == 99.8 || percent.toFixed(1) == 99.9 || percent.toFixed(1) == 100) {
-    console.log('end')
-    this.clear();
-    this.enable = false;
-    $('#elem2').wScratchPad('clear');
-    document.getElementById('elem2').style = `
-      pointer-events: none;
-      display: none;
-    `
-    $('#elem3').wScratchPad({
-      size: 25,          // The size of the brush/scratch.
-      bg: './images/alpha-bg.png',  // Background (image path or hex color).
-      fg: './images/red.png',  // Foreground (image path or hex color).
-      realtime: true,       // Calculates percentage in realitime.
-      scratchMove: move2,
-      cursor: 'initial' // Set cursor.
-});
+function startEraseGame() {
+  function move3(e, percent) {
+    if (percent.toFixed(1) == 99.8 || percent.toFixed(1) == 99.9 || percent.toFixed(1) == 100) {
+      console.log('стёрты все слои');
+      this.clear();
+      isAllLayersErased = true;
+      fourthPage.classList.add('fourth-page_disabled');
+      endPage.classList.remove('end-page_disabled');
+      endPage.querySelector('.end-page__text').textContent = 'Поздравляем! Ты успешно справился с заданием! Теперь ты в конкурсе!';
+    }
   }
-}
-function move(e, percent) {
-  if (percent.toFixed(1) == 99.8 || percent.toFixed(1) == 99.9 || percent.toFixed(1) == 100) {
-    console.log('end');
-    this.clear();
-    this.enable = false;
-    $('#elem').wScratchPad('clear');
-    document.getElementById('elem').style = `
-      display: none;
-      pointer-events: none;
-    `
-    $('#elem2').wScratchPad({
-      size: 25,          // The size of the brush/scratch.
-      bg: './images/red.png',  // Background (image path or hex color).
-      fg: './images/gray.png',  // Foreground (image path or hex color).
-      realtime: true,       // Calculates percentage in realitime.
-      scratchMove: move2,
-      cursor: 'initial' // Set cursor.
-});
+  function move2(e, percent) {
+    if (percent.toFixed(1) == 99.8 || percent.toFixed(1) == 99.9 || percent.toFixed(1) == 100) {
+      console.log('end')
+      this.clear();
+      this.enable = false;
+      document.getElementById('elem3').style = 'z-index: 2; position: relative;';
+      $('#elem2').wScratchPad('clear');
+      document.getElementById('elem2').classList.add('elem-disabled');
+      $('#elem3').wScratchPad({
+        size: 25,          // The size of the brush/scratch.
+        bg: './images/alpha-bg.png',  // Background (image path or hex color).
+        fg: './images/red.png',  // Foreground (image path or hex color).
+        realtime: true,       // Calculates percentage in realitime.
+        scratchMove: move3,
+        cursor: 'initial' // Set cursor.
+  });
+    }
   }
+  function move(e, percent) {
+    if (percent.toFixed(1) == 99.8 || percent.toFixed(1) == 99.9 || percent.toFixed(1) == 100) {
+      console.log('end');
+      this.clear();
+      this.enable = false;
+      $('#elem').wScratchPad('clear');
+      document.getElementById('elem').classList.add('elem-disabled');
+      document.getElementById('elem2').style = 'z-index: 2; position: relative;';
+      $('#elem2').wScratchPad({
+        size: 25,          // The size of the brush/scratch.
+        bg: './images/red.png',  // Background (image path or hex color).
+        fg: './images/gray.png',  // Foreground (image path or hex color).
+        realtime: true,       // Calculates percentage in realitime.
+        scratchMove: move2,
+        cursor: 'initial' // Set cursor.
+  });
+    }
+  }
+  
+  $('#elem').wScratchPad({
+    size: 25,          // The size of the brush/scratch.
+    bg: './images/gray.png',  // Background (image path or hex color).
+    fg: './images/blue.png',  // Foreground (image path or hex color).
+    realtime: true,       // Calculates percentage in realitime.
+    scratchMove: move,
+    cursor: 'initial' // Set cursor.
+  });
 }
+startEraseGame();
 
-$('#elem').wScratchPad({
-  size: 25,          // The size of the brush/scratch.
-  bg: './images/gray.png',  // Background (image path or hex color).
-  fg: './images/blue.png',  // Foreground (image path or hex color).
-  realtime: true,       // Calculates percentage in realitime.
-  scratchMove: move,
-  cursor: 'initial' // Set cursor.
-});
-
+function restartEraseGame() {
+  document.getElementById('elem2').classList.remove('elem-disabled');
+  document.getElementById('elem').classList.remove('elem-disabled');
+  $('#elem').wScratchPad('reset');
+  $('#elem2').wScratchPad('reset');
+  $('#elem3').wScratchPad('reset');
+  document.getElementById('elem2').style = 'z-index: -10; position: relative;';
+  document.getElementById('elem3').style = 'z-index: -10; position: relative;';
+  // document.getElementById('elem').style = `
+  //       position: relative;
+  //       cursor: initial;
+  //     `
+  // document.getElementById('elem2').removeAttribute('style');
+  // document.getElementById('elem3').removeAttribute('style');
+}
 
 // ================ FETCH ==================
 
@@ -345,13 +371,36 @@ secondPageButton.addEventListener('click', () => {
   // });
 });
 
+var timerInstance = new easytimer.Timer();
+
 thirdPageButton.addEventListener('click', () => {
   thirdPage.classList.add('third-page_disabled');
+  timerInstance.start({
+    startValues: {
+      seconds: 20
+    },
+    countdown: true,
+  });
+  timerInstance.addEventListener('secondsUpdated', function (e) {
+      $('#basicUsage').html(timerInstance.getTimeValues().seconds);
+  });
+
   fourthPage.classList.remove('fourth-page_disabled');
   api.sendStatistics(userData, 'нажатие на кнопку "Приступить" на экране 3 экране ("Твой номер записан. Ты можешь создать новое изображение")')
     .then(data => console.log(data))
     .catch(err => console.log(err));
 });
+
+timerInstance.addEventListener('stopped', () => {
+  fourthPage.classList.add('fourth-page_disabled');
+  endPage.classList.remove('end-page_disabled');
+  if (!isAllLayersErased) {
+    endPage.querySelector('.end-page__text').textContent = 'Ты не успел. Попробуй еще раз';
+  }
+  else {
+    endPage.querySelector('.end-page__text').textContent = 'Поздравляем! Ты успешно справился с заданием! Теперь ты в конкурсе!';
+  }
+})
 
 endPageButton.addEventListener('click', () => {
   api.sendStatistics(userData, 'нажатие на кнопку "Выбрать другой дизайн" на последнем экране')
@@ -359,4 +408,8 @@ endPageButton.addEventListener('click', () => {
     .catch(err => console.log(err));
   endPage.classList.add('end-page_disabled');
   fourthPage.classList.remove('fourth-page_disabled');
+  document.getElementById('basicUsage').textContent = 20;
+  timerInstance.reset();
+  restartEraseGame();
+  isAllLayersErased = false;
 })

@@ -26,6 +26,18 @@ button:hover {
   cursor: pointer;
 }
 
+#basicUsage {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.elem-disabled {
+  display: none;
+  pointer-events: none;
+}
+
 #elem, #elem2, #elem3 {
   /* position: absolute; */
   width: 400px;
@@ -607,6 +619,7 @@ button:hover {
   gap: 19px;
   overflow: hidden;
   align-items: center;
+  justify-content: space-around;
   top: 0;
   left: 0;
   right: 0;
