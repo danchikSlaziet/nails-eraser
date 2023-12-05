@@ -348,6 +348,16 @@ firstPageButton.addEventListener('click', () => {
   }
   else {
     fourthPage.classList.remove('fourth-page_disabled');
+    thirdPage.classList.add('third-page_disabled');
+  timerInstance.start({
+    startValues: {
+      seconds: 20
+    },
+    countdown: true,
+  });
+  timerInstance.addEventListener('secondsUpdated', function (e) {
+      $('#basicUsage').html(timerInstance.getTimeValues().seconds);
+  });
   }
 });
 
