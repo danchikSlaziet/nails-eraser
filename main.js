@@ -54,9 +54,9 @@ function startEraseGame() {
       console.log('end')
       this.clear();
       this.enable = false;
-      document.getElementById('elem3').style = 'z-index: 2; position: relative;';
       $('#elem2').wScratchPad('clear');
-      document.getElementById('elem2').classList.add('elem-disabled');
+      // document.getElementById('elem2').classList.add('elem-disabled');
+      document.getElementById('elem2').style = 'display: none; pointer-events: none';
       $('#elem3').wScratchPad({
         size: 25,          // The size of the brush/scratch.
         bg: './images/alpha-bg.png',  // Background (image path or hex color).
@@ -64,7 +64,8 @@ function startEraseGame() {
         realtime: true,       // Calculates percentage in realitime.
         scratchMove: move3,
         cursor: 'initial' // Set cursor.
-  });
+      });
+      // document.getElementById('elem3').style = 'z-index: 2; position: relative;';
     }
   }
   function move(e, percent) {
@@ -73,8 +74,8 @@ function startEraseGame() {
       this.clear();
       this.enable = false;
       $('#elem').wScratchPad('clear');
-      document.getElementById('elem').classList.add('elem-disabled');
-      document.getElementById('elem2').style = 'z-index: 2; position: relative;';
+      document.getElementById('elem').style = 'display: none; pointer-events: none';
+      // document.getElementById('elem').classList.add('elem-disabled');
       $('#elem2').wScratchPad({
         size: 25,          // The size of the brush/scratch.
         bg: './images/red.png',  // Background (image path or hex color).
@@ -82,7 +83,8 @@ function startEraseGame() {
         realtime: true,       // Calculates percentage in realitime.
         scratchMove: move2,
         cursor: 'initial' // Set cursor.
-  });
+      });
+      // document.getElementById('elem2').style = 'z-index: 2; position: relative;';
     }
   }
   
@@ -98,13 +100,23 @@ function startEraseGame() {
 startEraseGame();
 
 function restartEraseGame() {
-  document.getElementById('elem2').classList.remove('elem-disabled');
-  document.getElementById('elem').classList.remove('elem-disabled');
+  // document.getElementById('elem2').classList.remove('elem-disabled');
+  // document.getElementById('elem').classList.remove('elem-disabled');
   $('#elem').wScratchPad('reset');
   $('#elem2').wScratchPad('reset');
   $('#elem3').wScratchPad('reset');
-  document.getElementById('elem2').style = 'z-index: -10; position: relative;';
-  document.getElementById('elem3').style = 'z-index: -10; position: relative;';
+  fourthPageScreen.innerHTML = `
+    <div id="elem">
+    </div>
+    <div id="elem2">
+    </div>
+    <div id="elem3">
+    </div>
+    <img id="hand" src="./images/hand.png" alt="">
+  `;
+  startEraseGame();
+  // document.getElementById('elem2').style = 'z-index: -10; position: relative;';
+  // document.getElementById('elem3').style = 'z-index: -10;position: relative;';
   // document.getElementById('elem').style = `
   //       position: relative;
   //       cursor: initial;
