@@ -39,7 +39,7 @@ let isAllLayersErased = false;
 
 function startEraseGame() {
   function move3(e, percent) {
-    if (percent.toFixed(1) == 98.8 || percent.toFixed(1) == 98.9 || percent.toFixed(1) == 99) {
+    if (percent.toFixed(1) == 98.6 || percent.toFixed(1) == 98.7 || percent.toFixed(1) == 98.8) {
       console.log('стёрты все слои');
       this.clear();
       isAllLayersErased = true;
@@ -49,7 +49,7 @@ function startEraseGame() {
     }
   }
   function move2(e, percent) {
-    if (percent.toFixed(1) == 98.8 || percent.toFixed(1) == 98.9 || percent.toFixed(1) == 99) {
+    if (percent.toFixed(1) == 98.6 || percent.toFixed(1) == 98.7 || percent.toFixed(1) == 98.8) {
       console.log('end')
       this.clear();
       this.enable = false;
@@ -66,7 +66,7 @@ function startEraseGame() {
     }
   }
   function move(e, percent) {
-    if (percent.toFixed(1) == 98.8 || percent.toFixed(1) == 98.9 || percent.toFixed(1) == 99) {
+    if (percent.toFixed(1) == 98.6 || percent.toFixed(1) == 98.7 || percent.toFixed(1) == 98.8) {
       console.log('end');
       this.clear();
       this.enable = false;
