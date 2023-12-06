@@ -18,7 +18,6 @@ const fourthPageScreen = fourthPage.querySelector('.fourth-page__screen');
 const nailButtons = fourthPage.querySelectorAll('.fourth-page__circle');
 const finalPage = document.querySelector('.final-page');
 const finalPageIMG = finalPage.querySelector('.final-page__img');
-// const finalPageSendButton = finalPage.querySelector('.final-page__send-button');
 const endPage = document.querySelector('.end-page');
 const endPageButton = endPage.querySelector('.end-page__button');
 
@@ -40,7 +39,7 @@ let isAllLayersErased = false;
 
 function startEraseGame() {
   function move3(e, percent) {
-    if (percent.toFixed(1) == 99.8 || percent.toFixed(1) == 99.9 || percent.toFixed(1) == 100) {
+    if (percent.toFixed(1) == 98.8 || percent.toFixed(1) == 98.9 || percent.toFixed(1) == 99) {
       console.log('стёрты все слои');
       this.clear();
       isAllLayersErased = true;
@@ -50,12 +49,11 @@ function startEraseGame() {
     }
   }
   function move2(e, percent) {
-    if (percent.toFixed(1) == 99.8 || percent.toFixed(1) == 99.9 || percent.toFixed(1) == 100) {
+    if (percent.toFixed(1) == 98.8 || percent.toFixed(1) == 98.9 || percent.toFixed(1) == 99) {
       console.log('end')
       this.clear();
       this.enable = false;
       $('#elem2').wScratchPad('clear');
-      // document.getElementById('elem2').classList.add('elem-disabled');
       document.getElementById('elem2').style = 'display: none; pointer-events: none';
       $('#elem3').wScratchPad({
         size: 25,          // The size of the brush/scratch.
@@ -65,17 +63,15 @@ function startEraseGame() {
         scratchMove: move3,
         cursor: 'initial' // Set cursor.
       });
-      // document.getElementById('elem3').style = 'z-index: 2; position: relative;';
     }
   }
   function move(e, percent) {
-    if (percent.toFixed(1) == 99.8 || percent.toFixed(1) == 99.9 || percent.toFixed(1) == 100) {
+    if (percent.toFixed(1) == 98.8 || percent.toFixed(1) == 98.9 || percent.toFixed(1) == 99) {
       console.log('end');
       this.clear();
       this.enable = false;
       $('#elem').wScratchPad('clear');
       document.getElementById('elem').style = 'display: none; pointer-events: none';
-      // document.getElementById('elem').classList.add('elem-disabled');
       $('#elem2').wScratchPad({
         size: 25,          // The size of the brush/scratch.
         bg: './images/red.png',  // Background (image path or hex color).
@@ -84,7 +80,7 @@ function startEraseGame() {
         scratchMove: move2,
         cursor: 'initial' // Set cursor.
       });
-      // document.getElementById('elem2').style = 'z-index: 2; position: relative;';
+      
     }
   }
   
@@ -100,8 +96,6 @@ function startEraseGame() {
 startEraseGame();
 
 function restartEraseGame() {
-  // document.getElementById('elem2').classList.remove('elem-disabled');
-  // document.getElementById('elem').classList.remove('elem-disabled');
   $('#elem').wScratchPad('reset');
   $('#elem2').wScratchPad('reset');
   $('#elem3').wScratchPad('reset');
@@ -115,14 +109,6 @@ function restartEraseGame() {
     <img id="hand" src="./images/hand.png" alt="">
   `;
   startEraseGame();
-  // document.getElementById('elem2').style = 'z-index: -10; position: relative;';
-  // document.getElementById('elem3').style = 'z-index: -10;position: relative;';
-  // document.getElementById('elem').style = `
-  //       position: relative;
-  //       cursor: initial;
-  //     `
-  // document.getElementById('elem2').removeAttribute('style');
-  // document.getElementById('elem3').removeAttribute('style');
 }
 
 // ================ FETCH ==================
